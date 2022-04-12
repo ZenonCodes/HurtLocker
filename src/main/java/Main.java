@@ -23,6 +23,7 @@ public class Main {
         output = RegexParser.removeExcessNewLines(output);
         output = RegexParser.removeUnusedKeys(output);
         output = RegexParser.setNullNameValues(output);
+        output = RegexParser.setNullPriceValues(output);
         System.out.println(output);
 
     }
