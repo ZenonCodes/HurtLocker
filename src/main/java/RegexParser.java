@@ -3,8 +3,6 @@ import java.util.regex.Pattern;
 
 public class RegexParser {
 
-    public RegexParser(){}
-
     public static String splitItems(String PARSE_ME){
         String REGEX = "[;|*|%|^|#|@|!]";
         String REPLACE = "\n";
@@ -107,7 +105,7 @@ public class RegexParser {
 
     public static String removeExcessNewLines(String PARSE_ME) {
         String REGEX = "(\\n{2})";
-        String REPLACE = ",\n";
+        String REPLACE = ",";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
