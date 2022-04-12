@@ -83,4 +83,25 @@ public class RegexParser {
 
         return PARSE_ME;
     }
+
+    public static String standardizeApplesValue(String PARSE_ME) {
+        String REGEX = "(?i)(ap...s)(?<=)";
+        String REPLACE = "Apples";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
+
+    public static String standardizeMilkValue(String PARSE_ME) {
+        String REGEX = "(?i)(m..k)(?<=)";
+        String REPLACE = "Milk";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+
+    }
 }

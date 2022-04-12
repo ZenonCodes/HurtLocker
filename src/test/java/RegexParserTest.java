@@ -1,8 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegexParserTest {
@@ -10,10 +7,14 @@ class RegexParserTest {
             "naME:BreaD;price:1.23;type:Food;expiration:1/02/2016##" +
             "NAMe:BrEAD;price:1.23;type:Food;expiration:2/25/2016##" +
             "naMe:MiLK;price:3.23;type:Food^expiration:1/11/2016##";
-    String testCookieString = "naMe:Cookies;price:2.25;type:Food%expiration:1/25/2016##\n" +
-            "naMe:CoOkieS;price:2.25;type:Food*expiration:1/25/2016##\n" +
-            "naMe:COokIes;price:2.25;type:Food;expiration:3/22/2016##\n" +
-            "naMe:COOkieS;price:2.25;type:Food;expiration:1/25/2016##\n";
+    String testCookieString = "naMe:Cookies;price:2.25;type:Food%expiration:1/25/2016##" +
+            "naMe:CoOkieS;price:2.25;type:Food*expiration:1/25/2016##" +
+            "naMe:COokIes;price:2.25;type:Food;expiration:3/22/2016##" +
+            "naMe:COOkieS;price:2.25;type:Food;expiration:1/25/2016##";
+    String testAppleMilkString = "NAME:MilK;price:3.23;type:Food;expiration:1/17/2016##" +
+            "naMe:MilK;price:1.23;type:Food!expiration:4/25/2016##" +
+            "naMe:apPles;price:0.25;type:Food;expiration:1/23/2016##" +
+            "naMe:apPles;price:0.23;type:Food;expiration:5/02/2016##";
 
     @Test
     void splitItems() {
@@ -237,24 +238,92 @@ class RegexParserTest {
                 "Type:Food\n" +
                 "Expiration:1/25/2016\n" +
                 "\n" +
-                "\n" +
                 "Name:Cookies\n" +
                 "Price:2.25\n" +
                 "Type:Food\n" +
                 "Expiration:1/25/2016\n" +
-                "\n" +
                 "\n" +
                 "Name:Cookies\n" +
                 "Price:2.25\n" +
                 "Type:Food\n" +
                 "Expiration:3/22/2016\n" +
                 "\n" +
-                "\n" +
                 "Name:Cookies\n" +
                 "Price:2.25\n" +
                 "Type:Food\n" +
                 "Expiration:1/25/2016\n" +
-                "\n\n";
+                "\n"
+                ;
+
+        assertEquals(actual,expected);
+    }
+
+    @Test
+    void standardizeAppleValue() {
+        String PARSE_ME = RegexParser.splitItems(testAppleMilkString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeCookieValue(PARSE_ME);
+        String actual = RegexParser.standardizeApplesValue(PARSE_ME);
+
+        String expected = "Name:MilK\n" +
+                "Price:3.23\n" +
+                "Type:Food\n" +
+                "Expiration:1/17/2016\n" +
+                "\n" +
+                "Name:MilK\n" +
+                "Price:1.23\n" +
+                "Type:Food\n" +
+                "Expiration:4/25/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/23/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.23\n" +
+                "Type:Food\n" +
+                "Expiration:5/02/2016\n" +
+                "\n";
+
+       assertEquals(actual,expected);
+    }
+    @Test
+    void standardizeMilkValue() {
+        String PARSE_ME = RegexParser.splitItems(testAppleMilkString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeCookieValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeApplesValue(PARSE_ME);
+        String actual = RegexParser.standardizeMilkValue(PARSE_ME);
+
+        String expected = "Name:Milk\n" +
+                "Price:3.23\n" +
+                "Type:Food\n" +
+                "Expiration:1/17/2016\n" +
+                "\n" +
+                "Name:Milk\n" +
+                "Price:1.23\n" +
+                "Type:Food\n" +
+                "Expiration:4/25/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/23/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.23\n" +
+                "Type:Food\n" +
+                "Expiration:5/02/2016\n" +
+                "\n";
 
         assertEquals(actual,expected);
     }
