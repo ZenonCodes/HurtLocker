@@ -21,6 +21,8 @@ public class Main {
         output = RegexParser.standardizeApplesValue(output);
         output = RegexParser.standardizeMilkValue(output);
         output = RegexParser.removeExcessNewLines(output);
+        output = RegexParser.removeUnusedKeys(output);
+        output = RegexParser.setNullNameValues(output);
         System.out.println(output);
 
     }
