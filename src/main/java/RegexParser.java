@@ -104,4 +104,14 @@ public class RegexParser {
         return PARSE_ME;
 
     }
+
+    public static String removeExcessNewLines(String PARSE_ME) {
+        String REGEX = "(\\n{2})";
+        String REPLACE = ",\n";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
 }

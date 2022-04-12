@@ -327,4 +327,75 @@ class RegexParserTest {
 
         assertEquals(actual,expected);
     }
+
+    @Test
+    void removeExcessNewLines() {
+        String PARSE_ME = RegexParser.splitItems(testAppleMilkString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeCookieValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeApplesValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeMilkValue(PARSE_ME);
+        String actual = RegexParser.removeExcessNewLines(PARSE_ME);
+
+        String expected = "Name:Milk\n" +
+                "Price:3.23\n" +
+                "Type:Food\n" +
+                "Expiration:1/17/2016,\n" +
+                "Name:Milk\n" +
+                "Price:1.23\n" +
+                "Type:Food\n" +
+                "Expiration:4/25/2016,\n" +
+                "Name:Apples\n" +
+                "Price:0.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/23/2016,\n" +
+                "Name:Apples\n" +
+                "Price:0.23\n" +
+                "Type:Food\n" +
+                "Expiration:5/02/2016,\n";
+
+        assertEquals(actual,expected);
+    }
+
+
+
+    @Test
+    void populateJerkSON() {
+        String PARSE_ME = RegexParser.splitItems(testAppleMilkString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeCookieValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeApplesValue(PARSE_ME);
+        String actual = RegexParser.standardizeMilkValue(PARSE_ME);
+
+        String expected = "Name:Milk\n" +
+                "Price:3.23\n" +
+                "Type:Food\n" +
+                "Expiration:1/17/2016\n" +
+                "\n" +
+                "Name:Milk\n" +
+                "Price:1.23\n" +
+                "Type:Food\n" +
+                "Expiration:4/25/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/23/2016\n" +
+                "\n" +
+                "Name:Apples\n" +
+                "Price:0.23\n" +
+                "Type:Food\n" +
+                "Expiration:5/02/2016\n" +
+                "\n";
+
+        assertEquals(actual,expected);
+    }
 }
