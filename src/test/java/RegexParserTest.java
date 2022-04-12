@@ -344,19 +344,19 @@ class RegexParserTest {
         String expected = "Name:Milk\n" +
                 "Price:3.23\n" +
                 "Type:Food\n" +
-                "Expiration:1/17/2016,\n" +
+                "Expiration:1/17/2016," +
                 "Name:Milk\n" +
                 "Price:1.23\n" +
                 "Type:Food\n" +
-                "Expiration:4/25/2016,\n" +
+                "Expiration:4/25/2016," +
                 "Name:Apples\n" +
                 "Price:0.25\n" +
                 "Type:Food\n" +
-                "Expiration:1/23/2016,\n" +
+                "Expiration:1/23/2016," +
                 "Name:Apples\n" +
                 "Price:0.23\n" +
                 "Type:Food\n" +
-                "Expiration:5/02/2016,\n";
+                "Expiration:5/02/2016,";
 
         assertEquals(actual,expected);
     }

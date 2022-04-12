@@ -20,6 +20,7 @@ public class Main {
         output = RegexParser.standardizeCookieValue(output);
         output = RegexParser.standardizeApplesValue(output);
         output = RegexParser.standardizeMilkValue(output);
+        output = RegexParser.removeExcessNewLines(output);
         System.out.println(output);
 
     }
