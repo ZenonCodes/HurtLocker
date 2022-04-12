@@ -18,6 +18,8 @@ public class Main {
         output = RegexParser.standardizeExpirationKey(output);
         output = RegexParser.standardizeBreadValue(output);
         output = RegexParser.standardizeCookieValue(output);
+        output = RegexParser.standardizeApplesValue(output);
+        output = RegexParser.standardizeMilkValue(output);
         System.out.println(output);
 
     }
