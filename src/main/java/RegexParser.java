@@ -132,4 +132,14 @@ public class RegexParser {
 
         return PARSE_ME;
     }
+
+    public static String setNullPriceValues(String PARSE_ME) {
+        String REGEX = ":(?<=)\n}";
+        String REPLACE = ":null\n}";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
 }
