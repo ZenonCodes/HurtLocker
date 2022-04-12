@@ -433,4 +433,29 @@ class RegexParserTest {
         assertEquals(actual,expected);
     }
 
+    @Test
+    void setNullPriceValuesTest() {
+        String testNullNameString = "naMe:MILk;price:;type:Food;expiration:1/04/2016##";
+        String PARSE_ME = RegexParser.splitItems(testNullNameString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeCookieValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeApplesValue(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeMilkValue(PARSE_ME);
+        PARSE_ME = RegexParser.removeExcessNewLines(PARSE_ME);
+        PARSE_ME= RegexParser.removeUnusedKeys(PARSE_ME);
+        PARSE_ME = RegexParser.setNullNameValues(PARSE_ME);
+        String actual = RegexParser.setNullPriceValues(PARSE_ME);
+
+        String expected = "{\n" +
+                "\"Name\":\"Milk\",\n" +
+                "\"Price\":null" +
+                "\n},";
+
+        assertEquals(actual,expected);
+    }
+
 }
