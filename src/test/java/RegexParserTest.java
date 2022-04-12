@@ -10,6 +10,10 @@ class RegexParserTest {
             "naME:BreaD;price:1.23;type:Food;expiration:1/02/2016##" +
             "NAMe:BrEAD;price:1.23;type:Food;expiration:2/25/2016##" +
             "naMe:MiLK;price:3.23;type:Food^expiration:1/11/2016##";
+    String testCookieString = "naMe:Cookies;price:2.25;type:Food%expiration:1/25/2016##\n" +
+            "naMe:CoOkieS;price:2.25;type:Food*expiration:1/25/2016##\n" +
+            "naMe:COokIes;price:2.25;type:Food;expiration:3/22/2016##\n" +
+            "naMe:COOkieS;price:2.25;type:Food;expiration:1/25/2016##\n";
 
     @Test
     void splitItems() {
@@ -215,6 +219,42 @@ class RegexParserTest {
                 "Type:Food\n" +
                 "Expiration:1/11/2016\n" +
                 "\n";
+
+        assertEquals(actual,expected);
+    }
+    @Test
+    void standardizeCookiesValue() {
+        String PARSE_ME = RegexParser.splitItems(testCookieString);
+        PARSE_ME = RegexParser.standardizeNameKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizePriceKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeTypeKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeExpirationKey(PARSE_ME);
+        PARSE_ME = RegexParser.standardizeBreadValue(PARSE_ME);
+        String actual = RegexParser.standardizeCookieValue(PARSE_ME);
+
+        String expected = "Name:Cookies\n" +
+                "Price:2.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/25/2016\n" +
+                "\n" +
+                "\n" +
+                "Name:Cookies\n" +
+                "Price:2.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/25/2016\n" +
+                "\n" +
+                "\n" +
+                "Name:Cookies\n" +
+                "Price:2.25\n" +
+                "Type:Food\n" +
+                "Expiration:3/22/2016\n" +
+                "\n" +
+                "\n" +
+                "Name:Cookies\n" +
+                "Price:2.25\n" +
+                "Type:Food\n" +
+                "Expiration:1/25/2016\n" +
+                "\n\n";
 
         assertEquals(actual,expected);
     }

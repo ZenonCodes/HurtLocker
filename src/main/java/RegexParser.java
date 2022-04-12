@@ -73,4 +73,14 @@ public class RegexParser {
 
         return PARSE_ME;
     }
+
+    public static String standardizeCookieValue(String PARSE_ME) {
+        String REGEX = "(?i)(c..ki.s)(?<=)";
+        String REPLACE = "Cookies";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
 }

@@ -16,6 +16,8 @@ public class Main {
         output = RegexParser.standardizePriceKey(output);
         output = RegexParser.standardizeTypeKey(output);
         output = RegexParser.standardizeExpirationKey(output);
+        output = RegexParser.standardizeBreadValue(output);
+        output = RegexParser.standardizeCookieValue(output);
         System.out.println(output);
 
     }
