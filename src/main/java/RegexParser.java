@@ -24,7 +24,7 @@ public class RegexParser {
     }
     public static String standardizeNameKey(String PARSE_ME) {
         String REGEX = "(?i)(n)...(?=\\W):";
-        String REPLACE = "Name:";
+        String REPLACE = "{\n\"Name\":";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -33,7 +33,7 @@ public class RegexParser {
     }
     public static String standardizePriceKey(String PARSE_ME) {
         String REGEX = "(?i)(p)....(?=\\W):";
-        String REPLACE = "Price:";
+        String REPLACE = "\"Price\":";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -43,7 +43,7 @@ public class RegexParser {
 
     public static String standardizeTypeKey(String PARSE_ME) {
         String REGEX = "(?i)(t)y..(?=\\W):";
-        String REPLACE = "Type:";
+        String REPLACE = "\"Type\":";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -53,7 +53,7 @@ public class RegexParser {
 
     public static String standardizeExpirationKey(String PARSE_ME) {
         String REGEX = "(?i)e.........(?=\\W):";
-        String REPLACE = "Expiration:";
+        String REPLACE = "\"Expiration\":";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -64,7 +64,7 @@ public class RegexParser {
 
     public static String standardizeBreadValue(String PARSE_ME) {
         String REGEX = "(?i)(br.ad)(?<=)";
-        String REPLACE = "Bread";
+        String REPLACE = "\"Bread\",";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -74,7 +74,7 @@ public class RegexParser {
 
     public static String standardizeCookieValue(String PARSE_ME) {
         String REGEX = "(?i)(c..ki.s)(?<=)";
-        String REPLACE = "Cookies";
+        String REPLACE = "\"Cookies\",";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -84,7 +84,7 @@ public class RegexParser {
 
     public static String standardizeApplesValue(String PARSE_ME) {
         String REGEX = "(?i)(ap...s)(?<=)";
-        String REPLACE = "Apples";
+        String REPLACE = "\"Apples\",";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -94,7 +94,7 @@ public class RegexParser {
 
     public static String standardizeMilkValue(String PARSE_ME) {
         String REGEX = "(?i)(m..k)(?<=)";
-        String REPLACE = "Milk";
+        String REPLACE = "\"Milk\",";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
@@ -105,7 +105,27 @@ public class RegexParser {
 
     public static String removeExcessNewLines(String PARSE_ME) {
         String REGEX = "(\\n{2})";
-        String REPLACE = ",";
+        String REPLACE = ",\n},";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
+
+    public static String removeUnusedKeys(String PARSE_ME) {
+        String REGEX = "(\\n\\\"Type\\\":Food(?<=)\\n\\\"Ex.*:[0-9].+(?<=))";
+        String REPLACE = "";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(PARSE_ME);
+        PARSE_ME = matcher.replaceAll(REPLACE);
+
+        return PARSE_ME;
+    }
+
+    public static String setNullNameValues(String PARSE_ME) {
+        String REGEX = "(:\n\")";
+        String REPLACE = ":null,\n\"";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(PARSE_ME);
         PARSE_ME = matcher.replaceAll(REPLACE);
